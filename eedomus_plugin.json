@@ -1,0 +1,260 @@
+{
+    "plugin_id": "netatmoanemo",
+    "name_fr": "Anémomètre Netatmo",
+    "name_en": "netatmo anemometer",
+    "icon": "netatmo_anemometre.png",
+    "version": "1.0",
+    "creation_date": "2018-01-15",
+    "modification_date": "2018-04-03",
+    "author": "<a href='https://twitter.com/Thibautg16' target='_blank'>@Thibautg16</a> / <a href='https://github.com/Thibautg16/NetatmoWeatherAnemometreAppEedomus' target='_blank'> GitHub </a>",
+    "description_fr": "Ajouter un module <a href='https://www.netatmo.com/fr-FR/product/weather/weatherstation/accessories#windgauge' target='_blank'>Anémomètre</a> Netatmo à votre station Netatmo depuis votre box Eedomus.<br/>Application personnalisable, vous pouvez choisir d'installer ou non les différents canaux",
+    "description_en": "Add an Netatmo <a href='https://www.netatmo.com/en-GB/product/weather/weatherstation/accessories#windgauge' target='_blank'>Anemometer</a> to your Netatmo weather station from your Eedomus box.<br/>Customizable application, you can choose to install or not the different channels",
+    "forum_link": "https://forum.eedomus.com/viewtopic.php?f=50&t=6914",
+    "parameters":
+        [
+            {
+                "parameter": "configuration",
+                "description": "--------- Configuration ----------",
+                "xtype": "textfield",
+                "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
+            },
+            {
+                "parameter": "parent_netatmo", 
+                "description": "Station Météo :",
+                "xtype": "combo",
+                "field": "store : getCombo('/json/list_all.php?value_type=float&filter_unit=°C&sensor_only=1&main_only=1'), displayField: 'label', valueField: 'id', triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+            },  
+            {
+                "parameter": "xpath",
+                "description": "XPATH :",
+                "xtype": "textfield",
+                "default_value": "/netatmo/extension_2",
+                "field": "width:250, allowBlank:false"
+            },                               
+            {
+                "parameter": "choix_canaux_vide",
+                "description": "",
+                "xtype": "textfield",
+                "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
+            },
+            {
+                "parameter": "choix_canaux",
+                "description": "--------- Choix des canaux ----------",
+                "xtype": "textfield",
+                "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
+            },
+            {
+                "parameter": "box_wind_angle",
+                "description": "Anémomètre - Angle du vent :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: true"
+            },
+            {
+                "parameter": "box_wind_strength",
+                "description": "Anémomètre - Vitesse du vent :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: true"
+            },
+            {
+                "parameter": "box_gust_angle",
+                "description": "Anémomètre - Angle des rafales :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: true"
+            },
+            {
+                "parameter": "box_gust_strength",
+                "description": "Anémomètre - Force des rafales :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: true"
+            }, 
+            {
+                "parameter": "box_anemometre_batt",
+                "description": "Anémomètre - Batterie :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: false"
+            },
+            {
+                "parameter": "box_anemometre_rf",
+                "description": "Anémomètre - Signal radio :",
+                "xtype": "checkbox",
+                "field": "style: 'margin-top: 6px;', checked: false"
+            }                                                       
+        ],      
+    "devices":
+        [
+            {
+                "device_id": "wind_angle",
+                "create":"plugin.parameters.box_wind_angle",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "module_id": "51",
+                "icon": "netatmo_anemometre.png",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre Angle",
+                "utilisation_id":"35",
+                "value_unit": "angles",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",
+                        "value_type": "list",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/WindAngle",
+                        "POLLING": "5"
+                    },     
+                "values":
+                    [
+                        {"value": "N", "icon":"N_3.png", "description": "N"},
+                        {"value": "NNE", "icon":"NNE_3.png", "description": "NNE"},
+                        {"value": "NE", "icon":"NE_3.png", "description": "NE"},
+                        {"value": "ENE", "icon":"ENE_3.png", "description": "ENE"},
+                        {"value": "E", "icon":"E_3.png", "description": "E"},
+                        {"value": "ESE", "icon":"ESE_3.png", "description": "ESE"},
+                        {"value": "SE", "icon":"SE_3.png", "description": "SE"},
+                        {"value": "SSE", "icon":"SSE_3.png", "description": "SSE"},
+                        {"value": "S", "icon":"S_3.png", "description": "S"},
+                        {"value": "SSW", "icon":"SSO_3.png", "description": "SSO"},
+                        {"value": "SW", "icon":"SO_3.png", "description": "SO"},
+                        {"value": "WSw", "icon":"OSO_3.png", "description": "OSO"},
+                        {"value": "W", "icon":"O_3.png", "description": "O"},
+                        {"value": "WNW", "icon":"ONO_3.png", "description": "ONO"},
+                        {"value": "NW", "icon":"NO_3.png", "description": "NO"},
+                        {"value": "NNW", "icon":"NNO_3.png", "description": "NNO"}
+                    ]
+            },  
+            {
+                "device_id": "wind_strength",
+                "create":"plugin.parameters.box_wind_strength",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "module_id": "51",
+                "icon": "netatmo_anemometre.png",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre Vitesse",
+                "utilisation_id":"35",
+                "value_unit": "km/h",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",                        
+                        "value_type": "text",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/WindStrength",
+                        "POLLING": "5"
+                    }     
+            },               
+            {
+                "device_id": "gust_angle",
+                "create":"plugin.parameters.box_gust_angle",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "module_id": "51",
+                "icon": "netatmo_anemometre.png",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre Angle Rafales",
+                "utilisation_id":"35",
+                "value_unit": "angles",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",                        
+                        "value_type": "list",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/GustAngle",
+                        "POLLING": "5"
+                    },
+                    "values":
+                    [
+                        {"value": "N", "icon":"N_3.png", "description": "N"},
+                        {"value": "NNE", "icon":"NNE_3.png", "description": "NNE"},
+                        {"value": "NE", "icon":"NE_3.png", "description": "NE"},
+                        {"value": "ENE", "icon":"ENE_3.png", "description": "ENE"},
+                        {"value": "E", "icon":"E_3.png", "description": "E"},
+                        {"value": "ESE", "icon":"ESE_3.png", "description": "ESE"},
+                        {"value": "SE", "icon":"SE_3.png", "description": "SE"},
+                        {"value": "SSE", "icon":"SSE_3.png", "description": "SSE"},
+                        {"value": "S", "icon":"S_3.png", "description": "S"},
+                        {"value": "SSW", "icon":"SSO_3.png", "description": "SSO"},
+                        {"value": "SW", "icon":"SO_3.png", "description": "SO"},
+                        {"value": "WSw", "icon":"OSO_3.png", "description": "OSO"},
+                        {"value": "W", "icon":"O_3.png", "description": "O"},
+                        {"value": "WNW", "icon":"ONO_3.png", "description": "ONO"},
+                        {"value": "NW", "icon":"NO_3.png", "description": "NO"},
+                        {"value": "NNW", "icon":"NNO_3.png", "description": "NNO"}
+                    ]     
+            },  
+            {
+                "device_id": "gust_strength",
+                "create":"plugin.parameters.box_gust_strength",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "module_id": "51",
+                "icon": "netatmo_anemometre.png",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre Force Rafales",
+                "utilisation_id":"35",
+                "value_unit": "km/h",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",                        
+                        "value_type": "text",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/GustStrength",
+                        "POLLING": "5"
+                    }     
+            },  
+            {
+                "device_id": "anemometre_batt",
+                "create":"plugin.parameters.box_anemometre_batt",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "module_id": "51",
+                "icon": "Batterie.png",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre Batt.",
+                "utilisation_id":"35",
+                "value_unit": "%",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",                        
+                        "value_type": "float",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/battery_percent",
+                        "POLLING": "5"
+                    }     
+            },
+            {
+                "device_id": "anemometre_rf",
+                "create":"plugin.parameters.box_anemometre_rf",
+                "module_id": "51",
+                "parent_id": "plugin.parameters.parent_netatmo",
+                "type": "http",
+                "name_fr": "plugin.name - Anémomètre RF",
+                "utilisation_id":"35",
+                "parameters":
+                    {
+                        "VAR1": "",
+                        "VAR2": "",
+                        "VAR3": "",                        
+                        "value_type": "list",
+                        "ignore_errors": 3,
+                        "RAW_URL": "http://localhost/script/?exec=netatmo_oauth.php&oauth_code=[VAR1]&device_id=[VAR2]",
+                        "RAW_XPATH": "plugin.parameters.xpath/rf_status",
+                        "POLLING": "5"
+                    },
+                "values":
+                    [
+                        { "value": "0", "icon": "meteo_max.png", "description": "Bon"},
+                        { "value": "1", "icon": "meteo_moy.png", "description": "Moyen"},
+                        { "value": "2", "icon": "meteo_min.png", "description": "Faible"}
+                    ]        
+            }                       
+        ]
+}
