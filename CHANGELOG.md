@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [v1.2] - 2018-06-12 by @Thibautg16
+- Fix : Modification du type de valeur pour Vitesse du vent & Force des rafales (text => float)
+
 ## [v1.1] - 2018-06-10 by @Thibautg16
 - Fix : Angle vent/rafales OSO (WSw => WSW)
 - New : Nouvelles icônes pour les angles du vent (Merci @Mathieu_63)
